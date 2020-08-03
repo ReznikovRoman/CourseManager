@@ -1,4 +1,3 @@
-
 from course_classes.teacher import Teacher
 
 

@@ -1,4 +1,3 @@
-
 from course_classes.course import Course
 
 
