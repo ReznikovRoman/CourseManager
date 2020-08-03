@@ -4,7 +4,7 @@ from course_classes.teacher import Teacher
 
 class Course:
     """ Course, in which Students can enroll or which can be taught by a Teacher """
-    def __init__(self, name, code, teacher):
+    def __init__(self, name, code, teacher=None):
         self._name = name
         self._code = code
         self._teachers = []
@@ -14,6 +14,8 @@ class Course:
             self._teachers.append(teacher)
         elif isinstance(teacher, list):
             self._teachers = teacher
+        else:
+            pass
 
     def get_name(self):
         return self._name
