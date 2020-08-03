@@ -182,7 +182,7 @@ update_grade(t3_courses)
 
 def end_course(a_course: Course):
     for enroll in a_course.get_enrollments():
-        if enroll.get_final_grade() > 4:
+        if enroll.get_final_grade() >= 4:
             enroll.update_certificate(a_has_certificate=True)
         else:
             enroll.update_certificate(a_has_certificate=False)
