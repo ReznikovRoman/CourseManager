@@ -5,34 +5,60 @@ from course_classes.enroll import Enroll
 from course_classes.person import Person
 from course_classes.student import Student
 from course_classes.teacher import Teacher
+from course_classes.manager import Manager
 
 from datetime import date
 import random
 
 
+# Managers sign up
+
+# Manager - 1
+manager_1_adr = Address(city="Cambridge", street="77 Massachusetts Avenue", zip="02139")
+manager_1_date = date(1980, 7, 6)
+manager_1 = Manager("Cari", "Angellotti", phone="(617) 258-7489", date_of_birth=manager_1_date,
+                    address=manager_1_adr, salary=65000)
+
+# Manager - 2
+manager_2_adr = Address(city="Cambridge", street="77 Massachusetts Avenue", zip="02139")
+manager_2_date = date(1985, 9, 17)
+manager_2 = Manager("Kenneth", "Davies", phone="(617) 324-8188", date_of_birth=manager_2_date,
+                    address=manager_2_adr, salary=75000)
+
+
 # Create 3 Courses (Python, C++, JavaScript)
-python_course = Course(name="Python", code="001")
-c_course = Course(name="C++", code="002")
-javascript_course = Course(name="JavaScript", code="003")
+
+# Manager - 1 creates 2 courses (Python and C++)
+python_course = manager_1.create_course("Python", "001")
+c_course = manager_1.create_course("C++", "002")
+
+# Manager - 2 creates 1 course (JavaScript)
+javascript_course = manager_2.create_course("JavaScript", "003")
+
+# Manager - 2 will also manage "Python Course"
+manager_2.add_course(python_course)
+
+# Get list of all Courses
+curr_courses = Manager.courses_lst
 
 #########################################################################################################
 
 # Teachers sign up
 
 # Teacher - 1
-teacher_1_adr = Address(city="Berlin", street="Marchstrasse", zip=10587)
+teacher_1_adr = Address(city="Berlin", street="Marchstrasse", zip="10587")
 teacher_1_date = date(1975, 4, 23)
 teacher_1 = Teacher("Rolf", "Niedermeier", phone="+49(0)30 314-21739", date_of_birth=teacher_1_date,
                     address=teacher_1_adr, salary=90000)
 
 # Teacher - 2
-teacher_2_adr = Address(city="Berlin", street="Bismarkstrasse", zip=10623)
+teacher_2_adr = Address(city="Berlin", street="Bismarkstrasse", zip="10623")
 teacher_2_date = date(1960, 8, 7)
 teacher_2 = Teacher("Henning", "Meyer", phone="+49(0)30 314-21739", date_of_birth=teacher_2_date,
                     address=teacher_2_adr, salary=50000)
 
 # Teacher - 3
-teacher_3_adr = Address(city="Berlin", street="Straße des 17. Juni 135", zip=10623)
+teacher_3_adr = Address(city="Berlin", street="Straße des 17. Juni 135", zip="10623")
 teacher_3_date = date(1975, 4, 23)
 teacher_3 = Teacher("Ulf", "Schrader", phone="+49(0)30 314-73141", date_of_birth=teacher_3_date,
                     address=teacher_3_adr, salary=125000)
@@ -116,7 +142,6 @@ s9 = Student("Maxim", "Solovyov", "+7(985)111-11-11", s9_date, s9_adr)
 
 # Students choose, in which course they want to enroll (python_course, c_course, javascript_course)
 
-
 enroll_11 = Enroll(s1, python_course)
 python_course.add_enrollment(enroll_11)
 s1.add_enroll(enroll_11)
@@ -188,8 +213,6 @@ def end_course(a_course: Course):
             enroll.update_certificate(a_has_certificate=False)
     print(f"Course {a_course.get_name()} ({a_course.get_code()}) is finished.")
 
-
-curr_courses = [python_course, c_course, javascript_course]
 
 for course in curr_courses:
     end_course(course)
