@@ -5,17 +5,17 @@ class Teacher(Person):
     """ Teacher, who teaches Course(s) and can evaluate Students' assignments """
     def __init__(self, first_n, last_n, phone, date_of_birth, address, salary):
         super(Teacher, self).__init__(first_n, last_n, phone, date_of_birth, address)
-        self._salary = salary
-        self._courses = []
+        self.__salary = salary
+        self.__courses = []
 
     def get_salary(self):
-        return self._salary
+        return self.__salary
 
     def get_courses(self):
-        return self._courses
+        return self.__courses
 
     def add_course(self, course):
-        self._courses.append(course)
+        self.__courses.append(course)
 
 
 

@@ -3,44 +3,52 @@ from course_classes.teacher import Teacher
 
 class Course:
     """ Course, in which Students can enroll or which can be taught by a Teacher """
-    def __init__(self, name, code, permissions, teacher=None):
+    def __init__(self, name, code, permissions, min_grade=4, teacher=None):
         if permissions == "manager":
-            self._name = name
-            self._code = code
-            self._teachers = []
-            self._enrollments = []
+            self.__name = name
+            self.__code = code
+            self.__teachers = []
+            self.__enrollments = []
+            self.__min_grade = min_grade
 
             if isinstance(teacher, Teacher):
-                self._teachers.append(teacher)
+                self.__teachers.append(teacher)
             elif isinstance(teacher, list):
-                self._teachers = teacher
+                self.__teachers = teacher
             else:
                 pass
 
     def get_name(self):
-        return self._name
+        return self.__name
 
     def change_name(self, new_name, permissions):
         if permissions == "manager":
-            self._name = new_name
+            self.__name = new_name
+
+    def get_min_grade(self):
+        return self.__min_grade
+
+    def set_min_grade(self, new_grade, permissions):
+        if permissions == "manager":
+            self.__min_grade = new_grade
 
     def get_code(self):
-        return self._code
+        return self.__code
 
     def get_teachers(self):
-        return self._teachers
+        return self.__teachers
 
     def get_enrollments(self):
-        return self._enrollments
+        return self.__enrollments
 
     def add_teacher(self, teacher):
-        self._teachers.append(teacher)
+        self.__teachers.append(teacher)
 
     def add_enrollment(self, enroll):
-        self._enrollments.append(enroll)
+        self.__enrollments.append(enroll)
 
     def __str__(self):
-        return f"Course Name: {self._name};  Code: {self._code}"
+        return f"Course Name: {self.__name};  Code: {self.__code}"
 
 
 

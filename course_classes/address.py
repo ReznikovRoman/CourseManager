@@ -3,21 +3,21 @@
 class Address:
     """ Address of a Person """
     def __init__(self, city, street, zip=None):
-        self._city = city
-        self._street = street
-        self._zip = zip
+        self.__city = city
+        self.__street = street
+        self.__zip = zip
 
     def get_city(self):
-        return self._city
+        return self.__city
 
     def get_street(self):
-        return self._street
+        return self.__street
 
     def get_zip(self):
-        return self._zip
+        return self.__zip
 
     def print_address(self):
-        return f"City: {self._city};  Street: {self._street};  Zip Code: {self._zip}"
+        return f"City: {self.__city};  Street: {self.__street};  Zip Code: {self.__zip}"
 
 
 
