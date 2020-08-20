@@ -1,4 +1,4 @@
-from course_classes.person import Person
+from CourseManager.course_classes.person import Person
 
 
 class Teacher(Person):

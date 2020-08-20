@@ -1,4 +1,4 @@
-from course_classes.address import Address
+from CourseManager.course_classes.address import Address
 from datetime import date
 
 

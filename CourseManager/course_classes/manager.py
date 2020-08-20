@@ -1,6 +1,6 @@
 
-from course_classes.person import Person
-from course_classes.course import Course
+from CourseManager.course_classes.person import Person
+from CourseManager.course_classes.course import Course
 
 
 class Manager(Person):

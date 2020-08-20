@@ -1,4 +1,4 @@
-from course_classes.course import Course
+from CourseManager.course_classes.course import Course
 
 
 class Enroll:
