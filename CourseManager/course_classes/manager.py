@@ -26,6 +26,9 @@ class Manager(Person):
         if course in self.__courses:
             course.change_name(new_name, self.__permissions)
 
+    def change_course_min_grade(self, course: Course, new_grade):
+        course.set_min_grade(new_grade, self.__permissions)
+
     def get_salary(self):
         return self.__salary
 
@@ -34,6 +37,12 @@ class Manager(Person):
 
     def get_permission(self):
         return self.__permissions
+
+    def end_course(self, course):
+        if course.get_state() != "closed":
+            course.change_state(new_state="closed", permissions=self.__permissions)
+            for enroll in course.get_enrollments():
+                enroll.give_certificate()
 
 
 
