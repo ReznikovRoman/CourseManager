@@ -158,6 +158,16 @@ print(
 choice = ["-1"]
 
 
+def has_permissions(manager: Manager, course_id: str):
+    valid_ids = [str(i + 1) for i in range(len(manager.get_manager_courses()))]
+
+    if manager.get_manager_courses():
+        if course_id in valid_ids:
+            return True
+        else:
+            return False
+
+
 def main_menu():
 
     while choice[0] != "q":
@@ -251,15 +261,13 @@ def manager_menu():  # logged as a Manager
         elif choice[0] == "5":  # change Course's name
             print("Which Course's name do you want to change?")
 
-            valid_ids = [str(i + 1) for i in range(len(curr_manager.get_manager_courses()))]
-
             if curr_manager.get_manager_courses():
                 for i in range(len(curr_manager.get_manager_courses())):
                     print(f"{i+1} - {curr_manager.get_manager_courses()[i]}")
                 print()
 
             c_id = input("Enter your choice: ")
-            while c_id not in valid_ids:
+            while not has_permissions(curr_manager, c_id):
                 c_id = input("Enter your choice: ")
 
             print()
@@ -272,10 +280,45 @@ def manager_menu():  # logged as a Manager
             print("Course name was changed!")
 
         elif choice[0] == "6":  # change Course's min grade, which Student must have in order to get a certificate
-            pass
+            print("Which Course's grade do you want to change?")
+
+            if curr_manager.get_manager_courses():
+                for i in range(len(curr_manager.get_manager_courses())):
+                    print(f"{i + 1} - {curr_manager.get_manager_courses()[i]}")
+                print()
+
+            c_id = input("Enter your choice: ")
+            while not has_permissions(curr_manager, c_id):
+                c_id = input("Enter your choice: ")
+
+            print()
+
+            while True:
+                try:
+                    new_grade = float(input("Enter new grade: "))
+                    break
+                except ValueError as e:
+                    print("Please, enter new grade as a number (can be with the floating point)")
+
+            c = curr_manager.get_manager_courses()[int(c_id) - 1]
+            curr_manager.change_course_min_grade(c, new_grade)
 
         elif choice[0] == "7":  # end Course
-            pass
+            print("Which Course's grade do you want to end?")
+
+            if curr_manager.get_manager_courses():
+                for i in range(len(curr_manager.get_manager_courses())):
+                    print(f"{i + 1} - {curr_manager.get_manager_courses()[i]}")
+                print()
+
+            c_id = input("Enter your choice: ")
+            while not has_permissions(curr_manager, c_id):
+                c_id = input("Enter your choice: ")
+
+            print()
+
+            c = curr_manager.get_manager_courses()[int(c_id) - 1]
+            curr_manager.end_course(c)
 
         elif choice[0] == "0":  # go back to the main menu
             choice[0] = "-1"
@@ -307,7 +350,83 @@ def teacher_menu():  # logged as a Teacher
 
 
 def student_menu():  # logged as a Student
-    pass
+
+    # What's your Student's ID?
+    print("Enter your Student's ID")
+
+    while True:
+        try:
+            curr_student_id = int(input("Enter your ID: "))
+            break
+        except ValueError as e:
+            print("Please, enter your Student ID as a number.")
+
+    # while curr_manager_ind not in valid_ans:
+    #     curr_manager_ind = input("Enter your ID: ")
+    # curr_manager = managers[int(curr_manager_ind) - 1]
+
+    while choice[0] != "0" and choice[0] != "q":
+
+        print()
+        print("What do you want to do?: ")
+        print("1 - Create new Course\n"
+              "2 - Get list of all Courses\n"
+              "3 - Get list of Courses, which I can manage\n"
+              "4 - Add Course to your list (you will be able to Manage it)\n"
+              "5 - Change the Course's name\n"
+              "6 - Change the Course's min grade\n"
+              "7 - End the Course\n"
+              "0 - Quit back to the Main Menu\n"
+              "q - Quit the 'Course Manager'\n")
+        choice[0] = input("Enter your choice: ")
+        print()
+
+        if choice[0] == "1":  #
+            pass
+
+        elif choice[0] == "2":  #
+            pass
+
+        elif choice[0] == "3":  #
+            pass
+
+        elif choice[0] == "4":  #
+            pass
+
+        elif choice[0] == "5":  #
+            pass
+
+        elif choice[0] == "6":  #
+            pass
+
+        elif choice[0] == "7":  #
+            pass
+
+        elif choice[0] == "0":  # go back to the main menu
+            choice[0] = "-1"
+            break
+
+        elif choice[0] == "q":  # quit the program
+            break
+
+        else:
+            print()
+            print(f"There is no command {choice[0]}")
+            print("What do you want to do?: ")
+            print("1 - Create new Course\n"
+                  "2 - Get list of all Courses\n"
+                  "3 - Add Course to your list (you will be able to Manage it)\n"
+                  "4 - Change the Course's name\n"
+                  "5 - Change the Course's min grade\n"
+                  "6 - End the Course\n"
+                  "0 - Quit back to the Main Menu\n"
+                  "q - Quit the 'Course Manager'\n")
+            choice[0] = input("Enter your choice: ")
+
+    # get student's id
+
+    #
+
     # get list of all Courses
     # enroll in the Course
     # get list of all marks from the Course

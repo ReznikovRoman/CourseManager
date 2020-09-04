@@ -3,13 +3,14 @@ from CourseManager.course_classes.teacher import Teacher
 
 class Course:
     """ Course, in which Students can enroll or which can be taught by a Teacher """
-    def __init__(self, name, code, permissions, min_grade=4, teacher=None):
+    def __init__(self, name, code, permissions, min_grade=4, teacher=None, state="open"):
         if permissions == "manager":
             self.__name = name
             self.__code = code
             self.__teachers = []
             self.__enrollments = []
             self.__min_grade = min_grade
+            self.__state = state
 
             if isinstance(teacher, Teacher):
                 self.__teachers.append(teacher)
@@ -41,11 +42,18 @@ class Course:
     def get_enrollments(self):
         return self.__enrollments
 
+    def get_state(self):
+        return self.__state
+
     def add_teacher(self, teacher):
         self.__teachers.append(teacher)
 
     def add_enrollment(self, enroll):
         self.__enrollments.append(enroll)
+
+    def change_state(self, new_state, permissions):
+        if permissions == "manager":
+            self.__state = new_state
 
     def __str__(self):
         return f"Course Name: {self.__name};  Code: {self.__code}"
