@@ -1,14 +1,14 @@
 
-from course_classes.address import Address
-from course_classes.course import Course
-from course_classes.enroll import Enroll
-from course_classes.person import Person
-from course_classes.student import Student
-from course_classes.teacher import Teacher
-from course_classes.manager import Manager
+from CourseManager.course_classes.address import Address
+from CourseManager.course_classes.course import Course
+from CourseManager.course_classes.enroll import Enroll
+from CourseManager.course_classes.person import Person
+from CourseManager.course_classes.student import Student
+from CourseManager.course_classes.teacher import Teacher
+from CourseManager.course_classes.manager import Manager
 
-from datetime import date
 import random
+from datetime import date
 
 
 # Managers sign up
@@ -147,6 +147,7 @@ s9 = Student("Maxim", "Solovyov", "+7(985)111-11-11", s9_date, s9_adr)
 students = [s1, s2, s3, s4, s5, s6, s7, s8, s9]
 
 #####################################################################################################
+
 
 print(
     """
