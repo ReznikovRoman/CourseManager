@@ -1,6 +1,8 @@
 
 from CourseManager.course_classes.person import Person
 from CourseManager.course_classes.course import Course
+from CourseManager.course_classes.student import Student
+from CourseManager.course_classes.enroll import Enroll
 
 
 class Manager(Person):
@@ -43,6 +45,7 @@ class Manager(Person):
             course.change_state(new_state="closed", permissions=self.__permissions)
             for enroll in course.get_enrollments():
                 enroll.give_certificate()
+
 
 
 

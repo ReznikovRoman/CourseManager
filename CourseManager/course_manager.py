@@ -101,47 +101,47 @@ javascript_course.add_teacher(teacher_1)
 # Student - 1
 s1_date = date(2002, 3, 7)
 s1_adr = Address(city="Moscow", street="Arbat Street")
-s1 = Student("Roman", "Reznikov", "+7(985)111-11-11", s1_date, s1_adr)
+s1 = Student("Roman", "Reznikov", "+7(985)111-11-11", s1_date, s1_adr, 1)
 
 # Student - 2
 s2_date = date(2000, 3, 25)
 s2_adr = Address(city="Moscow", street="Kuznetsky Most")
-s2 = Student("Andrey", "Andropov", "+7(985)111-11-11", s2_date, s2_adr)
+s2 = Student("Andrey", "Andropov", "+7(985)111-11-11", s2_date, s2_adr, 2)
 
 # Student - 3
 s3_date = date(2002, 5, 1)
 s3_adr = Address(city="Moscow", street="Petrovka Street")
-s3 = Student("Philip", "Vorobyov", "+7(985)111-11-11", s3_date, s3_adr)
+s3 = Student("Philip", "Vorobyov", "+7(985)111-11-11", s3_date, s3_adr, 3)
 
 # Student - 4
 s4_date = date(2001, 6, 12)
 s4_adr = Address(city="Moscow", street="Sadovnicheskaya Street")
-s4 = Student("Nikolay", "Glukhov", "+7(985)111-11-11", s4_date, s4_adr)
+s4 = Student("Nikolay", "Glukhov", "+7(985)111-11-11", s4_date, s4_adr, 4)
 
 # Student - 5
 s5_date = date(2002, 2, 28)
 s5_adr = Address(city="Moscow", street="Tretyakovsky Proyezd")
-s5 = Student("Anna", "Zhukova", "+7(985)111-11-11", s5_date, s5_adr)
+s5 = Student("Anna", "Zhukova", "+7(985)111-11-11", s5_date, s5_adr, 5)
 
 # Student - 6
 s6_date = date(2000, 9, 30)
 s6_adr = Address(city="St. Petersburg", street="Malaya Konyushennaya Ulitsa")
-s6 = Student("Olga", "Ivanova", "+7(985)111-11-11", s6_date, s6_adr)
+s6 = Student("Olga", "Ivanova", "+7(985)111-11-11", s6_date, s6_adr, 6)
 
 # Student - 7
 s7_date = date(2001, 12, 24)
 s7_adr = Address(city="St. Petersburg", street="Ulitsa Zodchego Rossi")
-s7 = Student("Vyacheslav", "Zimin", "+7(985)111-11-11", s7_date, s7_adr)
+s7 = Student("Vyacheslav", "Zimin", "+7(985)111-11-11", s7_date, s7_adr, 7)
 
 # Student - 8
 s8_date = date(2002, 4, 16)
 s8_adr = Address(city="St. Petersburg", street="Malaya Sadovaya Ulitsa")
-s8 = Student("Mikhail", "Kovalyov", "+7(985)111-11-11", s8_date, s8_adr)
+s8 = Student("Mikhail", "Kovalyov", "+7(985)111-11-11", s8_date, s8_adr, 8)
 
 # Student - 9
 s9_date = date(2000, 8, 9)
 s9_adr = Address(city="St. Petersburg", street="Lesnoy Prospect")
-s9 = Student("Maxim", "Solovyov", "+7(985)111-11-11", s9_date, s9_adr)
+s9 = Student("Maxim", "Solovyov", "+7(985)111-11-11", s9_date, s9_adr, 9)
 
 # Get list of all Students
 students = [s1, s2, s3, s4, s5, s6, s7, s8, s9]
@@ -213,6 +213,7 @@ def manager_menu():  # logged as a Manager
               "5 - Change the Course's name\n"
               "6 - Change the Course's min grade\n"
               "7 - End the Course\n"
+              "8 - Add Student to the system\n"
               "0 - Quit back to the Main Menu\n"
               "q - Quit the 'Course Manager'\n")
         choice[0] = input("Enter your choice: ")
@@ -320,6 +321,24 @@ def manager_menu():  # logged as a Manager
             c = curr_manager.get_manager_courses()[int(c_id) - 1]
             curr_manager.end_course(c)
 
+        elif choice[0] == "8":  # add new student to the student's list
+            # get student's info
+            print("Enter info about the Student")
+            s_f_name = input("Enter student's first name: ")
+            s_l_name = input("Enter student's last name: ")
+            s_phone = input("Enter student's phone: ")
+            print("Enter Student's date of birth")
+            s_year = int(input("Enter year of birth: "))
+            s_month = int(input("Enter month of birth: "))
+            s_day = int(input("Enter day of birth: "))
+            s_date_of_birth = date(s_year, s_month, s_day)
+            s_address = input("Enter student's address: ")
+
+            # create new student and add him to the list
+            new_student = Student(s_f_name, s_l_name, s_phone, s_date_of_birth, s_address, len(students) + 1)
+            students.append(new_student)
+            print("Student was added to the list, student's ID: ", new_student.get_id())
+
         elif choice[0] == "0":  # go back to the main menu
             choice[0] = "-1"
             break
@@ -329,14 +348,16 @@ def manager_menu():  # logged as a Manager
 
         else:
             print()
-            print(f"There is no command {choice[0]}")
+            print(f"There is no command: {choice[0]}")
             print("What do you want to do?: ")
             print("1 - Create new Course\n"
                   "2 - Get list of all Courses\n"
-                  "3 - Add Course to your list (you will be able to Manage it)\n"
-                  "4 - Change the Course's name\n"
-                  "5 - Change the Course's min grade\n"
-                  "6 - End the Course\n"
+                  "3 - Get list of Courses, which I can manage\n"
+                  "4 - Add Course to your list (you will be able to Manage it)\n"
+                  "5 - Change the Course's name\n"
+                  "6 - Change the Course's min grade\n"
+                  "7 - End the Course\n"
+                  "8 - Add Student to the system\n"
                   "0 - Quit back to the Main Menu\n"
                   "q - Quit the 'Course Manager'\n")
             choice[0] = input("Enter your choice: ")
@@ -357,50 +378,84 @@ def student_menu():  # logged as a Student
     while True:
         try:
             curr_student_id = int(input("Enter your ID: "))
-            break
+            if curr_student_id in [s.get_id() for s in students]:
+                curr_student = students[curr_student_id - 1]
+                break
+            else:
+                print("There is no student with id: ", curr_student_id)
+
         except ValueError as e:
             print("Please, enter your Student ID as a number.")
-
-    # while curr_manager_ind not in valid_ans:
-    #     curr_manager_ind = input("Enter your ID: ")
-    # curr_manager = managers[int(curr_manager_ind) - 1]
 
     while choice[0] != "0" and choice[0] != "q":
 
         print()
         print("What do you want to do?: ")
-        print("1 - Create new Course\n"
-              "2 - Get list of all Courses\n"
-              "3 - Get list of Courses, which I can manage\n"
-              "4 - Add Course to your list (you will be able to Manage it)\n"
-              "5 - Change the Course's name\n"
-              "6 - Change the Course's min grade\n"
-              "7 - End the Course\n"
+        print("1 - Get list of all available courses\n"
+              "2 - Enroll in new Course\n"
+              "3 - Get list of Courses, in which you are enrolled\n"
+              "4 - Get list of my marks from the Course\n"
+              "5 - Get list of all certificates from Courses\n"
+              "6 - Unenroll from the course\n"
               "0 - Quit back to the Main Menu\n"
               "q - Quit the 'Course Manager'\n")
         choice[0] = input("Enter your choice: ")
         print()
 
-        if choice[0] == "1":  #
+        if choice[0] == "1":  # get list of all courses
+            for course in Manager.courses_lst:
+                print(course)
+
+        elif choice[0] == "2":  # enroll in the new course
+            print("In which course do you want to enroll?")
+            # print all courses, in which student is not enrolled
+            student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
+            available_courses = [course for course in Manager.courses_lst if course not in student_courses]
+            for course_ind in range(len(available_courses)):
+                print(f"{course_ind + 1} - {available_courses[course_ind]}")
+
+            while True:
+                chosen_course_ind = int(input("Enter course index: "))
+                if chosen_course_ind in [i+1 for i in range(len(available_courses))]:
+                    chosen_course = available_courses[chosen_course_ind - 1]
+                    break
+                else:
+                    print("Please, enter the correct course index.")
+
+            new_enroll = Enroll(curr_student, chosen_course)
+            chosen_course.add_enrollment(new_enroll)
+            curr_student.add_enroll(new_enroll)
+            print("You were successfully enrolled in the ", chosen_course, "\n")
+
+        elif choice[0] == "3":  # get list of all courses in which student is enrolled
+            if len(curr_student.get_enrolls()) != 0:
+                for enroll in curr_student.get_enrolls():
+                    print(enroll.get_course())
+            else:
+                print("You are not enrolled in any course.")
+
+        elif choice[0] == "4":  # get list of marks from the Course
             pass
 
-        elif choice[0] == "2":  #
+        elif choice[0] == "5":  # get list of all certificates
             pass
 
-        elif choice[0] == "3":  #
-            pass
+        elif choice[0] == "6":  # unenroll from the course
+            student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
+            print("From which course do you want to unenroll?")
+            if len(curr_student.get_enrolls()) != 0:
+                for course_ind in range(len(student_courses)):
+                    print(f"{course_ind + 1} - {student_courses[course_ind]}")
+            else:
+                print("You are not enrolled in any course.")
 
-        elif choice[0] == "4":  #
-            pass
-
-        elif choice[0] == "5":  #
-            pass
-
-        elif choice[0] == "6":  #
-            pass
-
-        elif choice[0] == "7":  #
-            pass
+            while True:
+                chosen_course = int(input("Enter course index: "))
+                if chosen_course in [i+1 for i in student_courses]:
+                    removable_course = student_courses[chosen_course - 1]
+                    break
+                else:
+                    print("Please, enter correct course index.")
 
         elif choice[0] == "0":  # go back to the main menu
             choice[0] = "-1"
@@ -411,26 +466,17 @@ def student_menu():  # logged as a Student
 
         else:
             print()
-            print(f"There is no command {choice[0]}")
+            print(f"There is no command: {choice[0]}")
             print("What do you want to do?: ")
-            print("1 - Create new Course\n"
-                  "2 - Get list of all Courses\n"
-                  "3 - Add Course to your list (you will be able to Manage it)\n"
-                  "4 - Change the Course's name\n"
-                  "5 - Change the Course's min grade\n"
-                  "6 - End the Course\n"
+            print("1 - Get list of all available courses\n"
+                  "2 - Enroll in new Course\n"
+                  "3 - Get list of Courses, in which you are enrolled\n"
+                  "4 - Get list of my marks from the Course\n"
+                  "5 - Get list of all certificates from Courses\n"
+                  "6 - Unenroll from the course\n"
                   "0 - Quit back to the Main Menu\n"
                   "q - Quit the 'Course Manager'\n")
             choice[0] = input("Enter your choice: ")
-
-    # get student's id
-
-    #
-
-    # get list of all Courses
-    # enroll in the Course
-    # get list of all marks from the Course
-    # get all certificates, if any
 
 
 if __name__ == '__main__':

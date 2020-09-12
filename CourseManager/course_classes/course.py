@@ -55,6 +55,9 @@ class Course:
         if permissions == "manager":
             self.__state = new_state
 
+    def remove_enrollment(self, enroll):
+        self.__enrollments.remove(enroll)
+
     def __str__(self):
         return f"Course Name: {self.__name};  Code: {self.__code}"
 

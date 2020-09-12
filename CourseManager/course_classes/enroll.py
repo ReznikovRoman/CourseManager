@@ -43,6 +43,9 @@ class Enroll:
         if self.__has_certificate:
             return f"certificate in the course: {self.__course.get_name()}"
 
+    def unenroll(self, course):
+        course.remove_enrollment(self)
+
 
 
 
