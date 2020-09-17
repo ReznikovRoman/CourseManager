@@ -17,6 +17,9 @@ class Student(Person):
     def get_id(self):
         return self.__id
 
+    def unenroll(self, enroll):
+        self.__enrolls.remove(enroll)
+
 
 
 
