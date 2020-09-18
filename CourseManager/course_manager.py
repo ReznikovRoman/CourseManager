@@ -31,11 +31,11 @@ managers = [manager_1, manager_2]
 # Create 3 Courses (Python, C++, JavaScript)
 
 # Manager - 1 creates 2 courses (Python and C++)
-python_course = manager_1.create_course("Python", "001")
-c_course = manager_1.create_course("C++", "002")
+python_course = manager_1.create_course("Python", 1)
+c_course = manager_1.create_course("C++", 2)
 
 # Manager - 2 creates 1 course (JavaScript)
-javascript_course = manager_2.create_course("JavaScript", "003")
+javascript_course = manager_2.create_course("JavaScript", 3)
 
 # Manager - 2 will also manage "Python Course"
 manager_2.add_course(python_course)
@@ -209,7 +209,7 @@ def manager_menu():  # logged as a Manager
         print("1 - Create new Course\n"
               "2 - Get list of all Courses\n"
               "3 - Get list of Courses, which I can manage\n"
-              "4 - Add Course to your list (you will be able to Manage it)\n"
+              "4 - Add Course to my list (will be able to Manage it)\n"
               "5 - Change the Course's name\n"
               "6 - Change the Course's min grade\n"
               "7 - End the Course\n"
@@ -222,7 +222,7 @@ def manager_menu():  # logged as a Manager
         if choice[0] == "1":  # create new Course
             print("Enter Course info")
             course_name = input("Course name: ")
-            course_id = input("Course ID: ")
+            course_id = len(curr_courses) + 1
             new_course = curr_manager.create_course(course_name, course_id)
             print(f"{new_course} was created!", "\n")
 
@@ -262,63 +262,75 @@ def manager_menu():  # logged as a Manager
         elif choice[0] == "5":  # change Course's name
             print("Which Course's name do you want to change?")
 
-            if curr_manager.get_manager_courses():
+            if len(curr_manager.get_manager_courses()) > 0:
                 for i in range(len(curr_manager.get_manager_courses())):
                     print(f"{i+1} - {curr_manager.get_manager_courses()[i]}")
                 print()
 
-            c_id = input("Enter your choice: ")
-            while not has_permissions(curr_manager, c_id):
                 c_id = input("Enter your choice: ")
+                while not has_permissions(curr_manager, c_id):
+                    c_id = input("Enter your choice: ")
 
-            print()
+                print()
 
-            new_name = input("Enter new Course's name: ")
+                new_name = input("Enter new Course's name: ")
 
-            c = curr_manager.get_manager_courses()[int(c_id) - 1]
-            curr_manager.change_course_name(c, new_name)
+                c = curr_manager.get_manager_courses()[int(c_id) - 1]
+                curr_manager.change_course_name(c, new_name)
 
-            print("Course name was changed!")
+                print("Course name was changed!")
+            else:
+                print("You do not manage any Course at the moment.")
 
-        elif choice[0] == "6":  # change Course's min grade, which Student must have in order to get a certificate
+        elif choice[0] == "6":  # change Course's min grade (this grade or higher in order to get a certificate)
             print("Which Course's grade do you want to change?")
 
-            if curr_manager.get_manager_courses():
+            if len(curr_manager.get_manager_courses()) > 0:
                 for i in range(len(curr_manager.get_manager_courses())):
                     print(f"{i + 1} - {curr_manager.get_manager_courses()[i]}")
                 print()
 
-            c_id = input("Enter your choice: ")
-            while not has_permissions(curr_manager, c_id):
                 c_id = input("Enter your choice: ")
+                while not has_permissions(curr_manager, c_id):
+                    c_id = input("Enter your choice: ")
 
-            print()
+                print()
 
-            while True:
-                try:
-                    new_grade = float(input("Enter new grade: "))
-                    break
-                except ValueError as e:
-                    print("Please, enter new grade as a number (can be with the floating point)")
+                c = curr_manager.get_manager_courses()[int(c_id) - 1]
 
-            c = curr_manager.get_manager_courses()[int(c_id) - 1]
-            curr_manager.change_course_min_grade(c, new_grade)
+                print(f"Current minimum grade: {c.get_min_grade()}")
+
+                while True:
+                    try:
+                        new_grade = float(input("Enter new grade: "))
+                        break
+                    except ValueError as e:
+                        print("Please, enter new grade as a number (can be with the floating point)")
+
+                c = curr_manager.get_manager_courses()[int(c_id) - 1]
+                curr_manager.change_course_min_grade(c, new_grade)
+            else:
+                print("You do not manage any Course at the moment.")
 
         elif choice[0] == "7":  # end Course
             print("Which Course's grade do you want to end?")
-            if curr_manager.get_manager_courses():
+            if len(curr_manager.get_manager_courses()) > 0:
                 for i in range(len(curr_manager.get_manager_courses())):
                     print(f"{i + 1} - {curr_manager.get_manager_courses()[i]}")
                 print()
 
-            c_id = input("Enter your choice: ")
-            while not has_permissions(curr_manager, c_id):
                 c_id = input("Enter your choice: ")
+                while not has_permissions(curr_manager, c_id):
+                    c_id = input("Enter your choice: ")
 
-            print()
+                print()
 
-            c = curr_manager.get_manager_courses()[int(c_id) - 1]
-            curr_manager.end_course(c)
+                c = curr_manager.get_manager_courses()[int(c_id) - 1]
+                curr_manager.end_course(c)
+
+                print(f"Course {c.get_name()} has been ended.")
+            else:
+                print("You do not manage any Course at the moment.")
 
         elif choice[0] == "8":  # add new student to the student's list
             # get student's info
@@ -371,7 +383,7 @@ def manager_menu():  # logged as a Manager
             print("1 - Create new Course\n"
                   "2 - Get list of all Courses\n"
                   "3 - Get list of Courses, which I can manage\n"
-                  "4 - Add Course to your list (you will be able to Manage it)\n"
+                  "4 - Add Course to my list (will be able to Manage it)\n"
                   "5 - Change the Course's name\n"
                   "6 - Change the Course's min grade\n"
                   "7 - End the Course\n"
@@ -408,9 +420,10 @@ def teacher_menu():  # logged as a Teacher
         print()
         print("What do you want to do?: ")
         print("1 - Get list of all available courses\n"
-              "2 - Choose a course where you want to teach\n"
+              "2 - Choose a new Course to teach\n"
               "3 - Get list of all courses, where I am teaching\n"
               "4 - Evaluate students in the course\n"
+              "5 - Get the list of students from the Course\n"
               "0 - Quit back to the Main Menu\n"
               "q - Quit the 'Course Manager'\n")
         choice[0] = input("Enter your choice: ")
@@ -452,39 +465,72 @@ def teacher_menu():  # logged as a Teacher
 
         elif choice[0] == "4":  # add new grade to the student
             teacher_courses = curr_teacher.get_courses()
-            print("In which course do you want to evaluate students?")
-            if len(teacher_courses) != 0:
+            if len(teacher_courses) > 0:
+                print("In which course do you want to evaluate students?")
+
                 for course_ind in range(len(teacher_courses)):
                     print(f"{course_ind + 1} - {teacher_courses[course_ind]}")
+
+                while True:
+                    try:
+                        chosen_course_id = int(input("Enter course index: "))
+                        if chosen_course_id in [i + 1 for i in range(len(teacher_courses))]:
+                            chosen_course = teacher_courses[chosen_course_id - 1]
+                            break
+                        else:
+                            print("Please, enter correct course index.")
+                    except ValueError as e:
+                        print("Please, enter course index as a digit.")
+
+                if len(chosen_course.get_enrollments()) > 0:
+
+                    print("\nAdd new mark for each student (0-100):")
+                    for enroll in chosen_course.get_enrollments():
+                        while True:
+                            try:
+                                curr_mark = int(input(f"{enroll.get_student().get_full_name()} - "))
+                                if 0 <= curr_mark <= 100:
+                                    break
+                                else:
+                                    print("Please, enter mark (0-100)")
+                            except ValueError as e:
+                                print("Please, enter mark as a digit.")
+
+                        enroll.update_grade(curr_mark)
+
+                    print("All marks were added.")
+                else:
+                    print("There are currently no students in this course.")
             else:
                 print("You are not assigned to any course.")
 
-            while True:
-                try:
-                    chosen_course_id = int(input("Enter course index: "))
-                    if chosen_course_id in [i + 1 for i in range(len(teacher_courses))]:
-                        chosen_course = teacher_courses[chosen_course_id - 1]
-                        break
-                    else:
-                        print("Please, enter correct course index.")
-                except ValueError as e:
-                    print("Please, enter course index as a digit.")
+        elif choice[0] == "5":  # get the list of students from the course
+            # print all courses, where teacher is not teaching for now
+            teacher_courses = [course for course in curr_teacher.get_courses()]
 
-            print("\nAdd new mark for each student (0-100):")
-            for enroll in chosen_course.get_enrollments():
+            if len(teacher_courses) > 0:
+                print("Students from which course do you want to see?")
+                for course_ind in range(len(teacher_courses)):
+                    print(f"{course_ind + 1} - {teacher_courses[course_ind]}")
+
                 while True:
                     try:
-                        curr_mark = int(input(f"{enroll.get_student().get_full_name()} - "))
-                        if 0 <= curr_mark <= 100:
+                        chosen_course_ind = int(input("Enter course index: "))
+                        if chosen_course_ind in [i + 1 for i in range(len(teacher_courses))]:
+                            chosen_course = teacher_courses[chosen_course_ind - 1]
                             break
                         else:
-                            print("Please, enter mark (0-100)")
+                            print("Please, enter the correct course index.")
                     except ValueError as e:
-                        print("Please, enter mark as a digit.")
+                        print("Please, enter course index as a digit.")
 
-                enroll.update_grade(curr_mark)
-
-            print("All marks were added.")
+                if len(chosen_course.get_enrollments()) > 0:
+                    for i in range(len(chosen_course.get_enrollments())):
+                        print(f"{i+1} - {chosen_course.get_enrollments()[i].get_student().get_full_name()}")
+                else:
+                    print("There are currently no students in the course ", chosen_course.get_name())
+            else:
+                print("You are not assigned to any course.")
 
         elif choice[0] == "0":  # go back to the main menu
             choice[0] = "-1"
@@ -498,9 +544,10 @@ def teacher_menu():  # logged as a Teacher
             print(f"There is no command: {choice[0]}")
             print("What do you want to do?: ")
             print("1 - Get list of all available courses\n"
-                  "2 - Choose a course where you want to teach\n"
+                  "2 - Choose a new Course to teach\n"
                   "3 - Get list of all courses, where I am teaching\n"
                   "4 - Evaluate students in the course\n"
+                  "5 - Get the list of students from the Course\n"
                   "0 - Quit back to the Main Menu\n"
                   "q - Quit the 'Course Manager'\n")
             choice[0] = input("Enter your choice: ")
@@ -529,7 +576,7 @@ def student_menu():  # logged as a Student
         print("What do you want to do?: ")
         print("1 - Get list of all available courses\n"
               "2 - Enroll in new Course\n"
-              "3 - Get list of Courses, in which you are enrolled\n"
+              "3 - Get list of Courses, in which I am enrolled\n"
               "4 - Get list of my marks from the Course\n"
               "5 - Get list of all certificates from Courses\n"
               "6 - Unenroll from the course\n"
@@ -567,7 +614,7 @@ def student_menu():  # logged as a Student
             print("You were successfully enrolled in the ", chosen_course, "\n")
 
         elif choice[0] == "3":  # get list of all courses in which student is enrolled
-            if len(curr_student.get_enrolls()) != 0:
+            if len(curr_student.get_enrolls()) > 0:
                 for enroll in curr_student.get_enrolls():
                     print(enroll.get_course())
             else:
@@ -575,73 +622,72 @@ def student_menu():  # logged as a Student
 
         elif choice[0] == "4":  # get list of marks from the Course
             student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
-            print("Marks from which course do you want to see?")
-            if len(curr_student.get_enrolls()) != 0:
+
+            if len(curr_student.get_enrolls()) > 0:
+                print("Marks from which course do you want to see?")
+
                 for course_ind in range(len(student_courses)):
                     print(f"{course_ind + 1} - {student_courses[course_ind]}")
+
+                while True:
+                    try:
+                        chosen_course_id = int(input("Enter course index: "))
+                        if chosen_course_id in [i + 1 for i in range(len(student_courses))]:
+                            chosen_course = student_courses[chosen_course_id - 1]
+                            break
+                        else:
+                            print("Please, enter correct course index.")
+                    except ValueError as e:
+                        print("Please, enter course index as a digit.")
+
+                for enroll in curr_student.get_enrolls():
+                    if enroll.get_course() is chosen_course:
+                        curr_enroll = enroll
+
+                if curr_enroll.get_grades():
+                    print("\nYour marks: ", *curr_enroll.get_grades())
+                else:
+                    print("\nYou don't have any marks in the course ", chosen_course.get_name())
             else:
                 print("You are not enrolled in any course.")
-
-            while True:
-                try:
-                    chosen_course_id = int(input("Enter course index: "))
-                    if chosen_course_id in [i + 1 for i in range(len(student_courses))]:
-                        chosen_course = student_courses[chosen_course_id - 1]
-                        break
-                    else:
-                        print("Please, enter correct course index.")
-                except ValueError as e:
-                    print("Please, enter course index as a digit.")
-
-            for enroll in curr_student.get_enrolls():
-                if enroll.get_course() is chosen_course:
-                    curr_enroll = enroll
-
-            if curr_enroll.get_grades():
-                print("\nYour marks: ", *curr_enroll.get_grades())
-            else:
-                print("\nYou don't have any marks in the course ", chosen_course.get_name())
 
         elif choice[0] == "5":  # get list of all certificates
             student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
 
-            has_certificate = False
-
-            for enroll in curr_student.get_enrolls():
-                if enroll.get_certificate():
-                    has_certificate = True
-                enroll.print_certificate()
-
-            if not has_certificate:
+            if len(curr_student.get_certificates()) > 0:
+               curr_student.print_certificates()
+            else:
                 print("\nYou don't have any certificates.")
 
         elif choice[0] == "6":  # unenroll from the course
             student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
-            print("From which course do you want to unenroll?")
-            if len(curr_student.get_enrolls()) != 0:
+
+            if len(curr_student.get_enrolls()) > 0:
+                print("From which course do you want to unenroll?")
+
+                while True:
+                    try:
+                        chosen_course_id = int(input("Enter course index: "))
+                        if chosen_course_id in [i + 1 for i in range(len(student_courses))]:
+                            removable_course = student_courses[chosen_course_id - 1]
+                            break
+                        else:
+                            print("Please, enter correct course index.")
+                    except ValueError as e:
+                        print("Please, enter course index as a digit.")
+
+                for enroll in curr_student.get_enrolls():
+                    if enroll.get_course() is removable_course:
+                        enroll_to_remove = enroll
+
+                curr_student.unenroll(enroll_to_remove)
+                removable_course.remove_enrollment(enroll_to_remove)
+                print("You was successfully unenrolled from the ", removable_course.get_name())
+
                 for course_ind in range(len(student_courses)):
                     print(f"{course_ind + 1} - {student_courses[course_ind]}")
             else:
                 print("You are not enrolled in any course.")
-
-            while True:
-                try:
-                    chosen_course_id = int(input("Enter course index: "))
-                    if chosen_course_id in [i+1 for i in range(len(student_courses))]:
-                        removable_course = student_courses[chosen_course_id - 1]
-                        break
-                    else:
-                        print("Please, enter correct course index.")
-                except ValueError as e:
-                    print("Please, enter course index as a digit.")
-
-            for enroll in curr_student.get_enrolls():
-                if enroll.get_course() is removable_course:
-                    enroll_to_remove = enroll
-
-            curr_student.unenroll(enroll_to_remove)
-            removable_course.remove_enrollment(enroll_to_remove)
-            print("You was successfully unenrolled from the ", removable_course.get_name())
 
         elif choice[0] == "0":  # go back to the main menu
             choice[0] = "-1"
@@ -656,7 +702,7 @@ def student_menu():  # logged as a Student
             print("What do you want to do?: ")
             print("1 - Get list of all available courses\n"
                   "2 - Enroll in new Course\n"
-                  "3 - Get list of Courses, in which you are enrolled\n"
+                  "3 - Get list of Courses, in which I am enrolled\n"
                   "4 - Get list of my marks from the Course\n"
                   "5 - Get list of all certificates from Courses\n"
                   "6 - Unenroll from the course\n"

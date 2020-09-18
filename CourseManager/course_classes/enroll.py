@@ -28,15 +28,13 @@ class Enroll:
     def give_certificate(self):
         if self.final_grade >= self.__course.get_min_grade():
             self.__has_certificate = True
+            new_certificate = f"Certificate in the course: {self.__course.get_name()}\n"
+            self.__student.add_certificate(new_certificate)
         else:
             self.__has_certificate = False
 
     def get_certificate(self):
         return self.__has_certificate
-
-    def print_certificate(self):
-        if self.__has_certificate:
-            return f"Certificate in the course: {self.__course.get_name()}"
 
     def unenroll(self, course):
         course.remove_enrollment(self)

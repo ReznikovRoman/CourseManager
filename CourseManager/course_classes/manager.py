@@ -43,8 +43,12 @@ class Manager(Person):
     def end_course(self, course):
         if course.get_state() != "closed":
             course.change_state(new_state="closed", permissions=self.__permissions)
-            for enroll in course.get_enrollments():
+
+            enrolls = [enroll for enroll in course.get_enrollments()]
+            for enroll in enrolls:
                 enroll.give_certificate()
+                enroll.get_student().unenroll(enroll)  # remove enroll from student
+                course.remove_enrollment(enroll)  # remove enroll from the course
 
 
 
