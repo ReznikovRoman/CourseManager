@@ -36,7 +36,7 @@ class Course:
             if isinstance(teacher, Teacher):
                 self.__teachers.append(teacher)
             elif isinstance(teacher, list):
-                self.__teachers = teacher
+                self.__teachers.extend(teacher)
             else:
                 pass
 
