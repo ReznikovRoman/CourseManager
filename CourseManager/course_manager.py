@@ -623,6 +623,8 @@ def student_menu():  # logged as a Student
         elif choice[0] == "4":  # get list of marks from the Course
             student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
 
+            print(curr_student.get_enrolls())
+
             if len(curr_student.get_enrolls()) > 0:
                 print("Marks from which course do you want to see?")
 
@@ -644,7 +646,7 @@ def student_menu():  # logged as a Student
                     if enroll.get_course() is chosen_course:
                         curr_enroll = enroll
 
-                if curr_enroll.get_grades():
+                if len(curr_enroll.get_grades()) > 0:
                     print("\nYour marks: ", *curr_enroll.get_grades())
                 else:
                     print("\nYou don't have any marks in the course ", chosen_course.get_name())
@@ -662,8 +664,11 @@ def student_menu():  # logged as a Student
         elif choice[0] == "6":  # unenroll from the course
             student_courses = [enroll.get_course() for enroll in curr_student.get_enrolls()]
 
-            if len(curr_student.get_enrolls()) > 0:
+            if len(student_courses) > 0:
                 print("From which course do you want to unenroll?")
+
+                for course_ind in range(len(student_courses)):
+                    print(f"{course_ind + 1} - {student_courses[course_ind]}")
 
                 while True:
                     try:

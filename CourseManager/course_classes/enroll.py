@@ -23,7 +23,14 @@ class Enroll:
 
     @property
     def final_grade(self):
-        return float(sum(self.__grades) / len(self.__grades))
+        try:
+            return float(sum(self.__grades) / len(self.__grades))
+        except ZeroDivisionError as e:
+            print("Log: Students don't have marks")
+            return 0
+        except Exception as e:
+            print("Log: Error {}".format(e))
+            return -1
 
     def give_certificate(self):
         if self.final_grade >= self.__course.get_min_grade():
