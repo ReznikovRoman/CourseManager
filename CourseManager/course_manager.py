@@ -174,7 +174,7 @@ def has_permissions(manager: Manager, course_id: str):
 def print_choices(obj, choices, msg):
     if len(obj) > 0:
         for i in range(len(obj)):
-            print(f"{i + 1} - {}")
+            print(f"{i + 1} - {}")  # TODO
 
     # if len(curr_manager.get_manager_courses()) > 0:
     #     for i in range(len(curr_manager.get_manager_courses())):
