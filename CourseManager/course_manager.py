@@ -158,6 +158,9 @@ print(
 choice = ["-1"]
 
 
+##################################################################################################################
+
+
 def has_permissions(manager: Manager, course_id: str):
     valid_ids = [str(i + 1) for i in range(len(manager.get_manager_courses()))]
 
@@ -166,6 +169,17 @@ def has_permissions(manager: Manager, course_id: str):
             return True
         else:
             return False
+
+
+def print_choices(obj, choices, msg):
+    if len(obj) > 0:
+        for i in range(len(obj)):
+            print(f"{i + 1} - {}")
+
+    # if len(curr_manager.get_manager_courses()) > 0:
+    #     for i in range(len(curr_manager.get_manager_courses())):
+    #         print(f"{i + 1} - {curr_manager.get_manager_courses()[i]}")
+    #     print()
 
 
 def main_menu():
@@ -721,97 +735,5 @@ if __name__ == '__main__':
 
 
 #########################################################################################################
-
-# Students choose, in which course they want to enroll (python_course, c_course, javascript_course)
-
-'''
-
-enroll_11 = Enroll(s1, python_course)
-python_course.add_enrollment(enroll_11)
-s1.add_enroll(enroll_11)
-enroll_12 = Enroll(s1, c_course)
-c_course.add_enrollment(enroll_12)
-s1.add_enroll(enroll_12)
-
-enroll_21 = Enroll(s1, python_course)
-python_course.add_enrollment(enroll_21)
-s2.add_enroll(enroll_21)
-
-enroll_31 = Enroll(s3, python_course)
-python_course.add_enrollment(enroll_31)
-s3.add_enroll(enroll_31)
-
-enroll_41 = Enroll(s4, c_course)
-python_course.add_enrollment(enroll_41)
-s4.add_enroll(enroll_41)
-
-enroll_51 = Enroll(s5, javascript_course)
-python_course.add_enrollment(enroll_51)
-s5.add_enroll(enroll_51)
-
-enroll_61 = Enroll(s6, javascript_course)
-python_course.add_enrollment(enroll_61)
-s6.add_enroll(enroll_61)
-
-enroll_71 = Enroll(s7, c_course)
-python_course.add_enrollment(enroll_71)
-s7.add_enroll(enroll_71)
-
-enroll_81 = Enroll(s8, c_course)
-python_course.add_enrollment(enroll_81)
-s8.add_enroll(enroll_81)
-
-enroll_91 = Enroll(s9, javascript_course)
-python_course.add_enrollment(enroll_91)
-s9.add_enroll(enroll_91)
-
-#########################################################################################################
-
-# Teachers update students' marks
-
-
-def update_grade(a_courses):
-    for a_course in a_courses:
-        for enroll in a_course.get_enrollments():
-            enroll.update_grade(random.randrange(2, 6))
-
-
-t1_courses = teacher_1.get_courses()
-t2_courses = teacher_2.get_courses()
-t3_courses = teacher_3.get_courses()
-
-update_grade(t1_courses)
-update_grade(t2_courses)
-update_grade(t3_courses)
-
-#########################################################################################################
-
-# All courses are finished and students can get their certificates
-
-
-def end_course(a_course: Course):
-    for enroll in a_course.get_enrollments():
-        enroll.give_certificate()
-    print(f"Course {a_course.get_name()} ({a_course.get_code()}) is finished.")
-
-
-for course in curr_courses:
-    end_course(course)
-
-print()
-
-#########################################################################################################
-
-# Get students, who has certificate
-
-for s in students:
-    for s_enroll in s.get_enrolls():
-        if s_enroll.get_certificate():
-            print(s.get_full_name(), "has a", s_enroll.print_certificate())
-
-
-#########################################################################################################
-'''
-
 
 

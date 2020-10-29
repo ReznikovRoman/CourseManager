@@ -127,6 +127,14 @@ class Manager(Person):
                 enroll.get_student().unenroll(enroll)  # remove enroll from student
                 course.remove_enrollment(enroll)  # remove enroll from the course
 
+    def __len__(self):
+        """
+
+        Returns:
+            Count of Courses, which manager can edit
+        """
+        return len(self.__courses)
+
 
 
 

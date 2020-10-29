@@ -71,6 +71,14 @@ class Teacher(Person):
         """
         enroll.update_grade(grade)
 
+    def __len(self):
+        """
+
+        Returns:
+            Count of Courses, which are taught by current Teacher
+        """
+        return len(self.__courses)
+
         
         
         
