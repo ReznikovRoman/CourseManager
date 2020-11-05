@@ -136,7 +136,3 @@ class Manager(Person):
         return len(self.__courses)
 
 
-
-
-
-
