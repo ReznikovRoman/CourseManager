@@ -80,12 +80,3 @@ class Teacher(Person):
         return len(self.__courses)
 
         
-        
-        
-
-
-
-
-
-
-
