@@ -161,7 +161,17 @@ choice = ["-1"]
 ##################################################################################################################
 
 
-def has_permissions(manager: Manager, course_id: str):
+def has_permissions(manager: Manager, course_id: str) -> bool:
+    """
+    Checks if user has certain permissions
+
+    Args:
+        manager: Manager
+        course_id: str
+
+    Returns:
+        bool
+    """
     valid_ids = [str(i + 1) for i in range(len(manager.get_manager_courses()))]
 
     if manager.get_manager_courses():
@@ -169,18 +179,6 @@ def has_permissions(manager: Manager, course_id: str):
             return True
         else:
             return False
-
-
-def print_choices(obj, choices, msg):
-    pass
-    # if len(obj) > 0:
-    #     for i in range(len(obj)):
-    #         print(f"{i + 1} - {}")  # TODO
-
-    # if len(curr_manager.get_manager_courses()) > 0:
-    #     for i in range(len(curr_manager.get_manager_courses())):
-    #         print(f"{i + 1} - {curr_manager.get_manager_courses()[i]}")
-    #     print()
 
 
 def main_menu():

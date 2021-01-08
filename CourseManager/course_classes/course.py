@@ -1,8 +1,6 @@
 from CourseManager.course_classes.teacher import Teacher
 
 
-# TODO: Remove permissions arg (only managers have access to creating a new Course ==> no need in 'if statement')
-#  OR add a decorator to all functions, where the permission check is needed
 class Course:
     """
     Course, in which Students can enroll or which can be taught by a Teacher
